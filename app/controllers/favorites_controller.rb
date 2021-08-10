@@ -1,7 +1,7 @@
-class FavoriteController < ApplicationController
+class FavoritesController < ApplicationController
     def create
         favorite = Favorite.create(fav_params)
-        render json: user
+        render json: favorite
     end
 
     def index
@@ -12,16 +12,17 @@ class FavoriteController < ApplicationController
     def destroy
         favorite = Favorite.find_by(id: params[:id])
         if favorite
-            favorite.destroy
+            favorite.delete
             render json: {message: "favorite deleted"}
         else
             render json: {error: "not found"}
         end
+
+    end
 
     private
 
     def fav_params
         params.permit(:user_id, :artist_id, :img, :artist_name)
     end
-
 end
